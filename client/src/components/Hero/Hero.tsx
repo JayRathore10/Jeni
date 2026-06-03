@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
       <div className="hero__container">
         <div className="hero__badge">
           <span className="hero__badge-dot" />
-          Introducing Jeni — Your own sharing platform 
+          Introducing Jeni — Your own sharing platform
         </div>
 
         <h1 className="hero__headline">
@@ -39,13 +39,13 @@ const Hero: React.FC = () => {
           <a href="#" className="hero__cta hero__cta--primary">
             Start for free
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <a href="#" className="hero__cta hero__cta--secondary">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/>
+              <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor" />
             </svg>
             Watch demo
           </a>
@@ -74,10 +74,18 @@ const Hero: React.FC = () => {
             {/* Sidebar */}
             <div className="hero__preview-sidebar">
               <div className="hp-sidebar-logo">
-                <div className="hp-logo-sq" />
+                <div className="hp-logo-sq">
+                  <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                    <rect x="2" y="2" width="8" height="8" rx="5" fill="currentColor" opacity="0.9" />
+                    <rect x="12" y="2" width="8" height="8" rx="1" fill="currentColor" opacity="0.6" />
+                    <rect x="2" y="12" width="8" height="8" rx="1" fill="currentColor" opacity="0.6" />
+                    <rect x="12" y="12" width="8" height="8" rx="5" fill="currentColor" />
+                  </svg>
+                </div>
+
                 <span>Jeni</span>
               </div>
-              {['File manager','Recent files','Favorites','Trash bin'].map((item, i) => (
+              {['File manager', 'Recent files', 'Favorites', 'Trash bin'].map((item, i) => (
                 <div key={i} className={`hp-sidebar-item ${i === 0 ? 'hp-sidebar-item--active' : ''}`}>
                   <div className="hp-sidebar-dot" />
                   {item}
@@ -85,7 +93,7 @@ const Hero: React.FC = () => {
               ))}
               <div className="hp-sidebar-divider" />
               <div className="hp-sidebar-section">Shared files</div>
-              {['Team','School'].map((item, i) => (
+              {['Team', 'School'].map((item, i) => (
                 <div key={i} className="hp-sidebar-item">
                   <div className="hp-sidebar-dot hp-sidebar-dot--sm" />
                   {item}
