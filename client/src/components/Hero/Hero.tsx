@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
       <div className="hero__container">
         <div className="hero__badge">
           <span className="hero__badge-dot" />
-          Introducing MyBox 2.0 — Now with AI-powered search
+          Introducing Jeni — Your own sharing platform 
         </div>
 
         <h1 className="hero__headline">
