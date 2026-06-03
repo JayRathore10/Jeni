@@ -26,8 +26,8 @@ export const SignUp: React.FC = () => {
             </span>
           </div>
 
-          <h1>Welcome back</h1>
-          <p>Sign in to continue</p>
+          <h1>Join Jeni</h1>
+          <p>Create your account</p>
         </div>
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
