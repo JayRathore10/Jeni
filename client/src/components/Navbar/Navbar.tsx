@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
               <rect x="12" y="12" width="8" height="8" rx="2" fill="currentColor"/>
             </svg>
           </span>
-          <span className="navbar__logo-text">MyBox</span>
+          <span className="navbar__logo-text">Jeni</span>
         </a>
 
         <ul className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
