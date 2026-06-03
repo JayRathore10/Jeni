@@ -1,0 +1,55 @@
+.ap-loading-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bg);
+  z-index: 9999;
+}
+
+.ap-loading-logo {
+  color: var(--accent);
+}
+
+.logo-square {
+  transform-origin: center;
+}
+
+.sq-1 {
+  animation: pulse 1.4s infinite;
+}
+
+.sq-2 {
+  animation: pulse 1.4s infinite 0.15s;
+}
+
+.sq-3 {
+  animation: pulse 1.4s infinite 0.3s;
+}
+
+.sq-4 {
+  animation: pulse 1.4s infinite 0.45s;
+}
+
+.ap-loading-text {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
