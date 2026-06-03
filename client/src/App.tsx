@@ -1,20 +1,10 @@
 import './App.css'
-
+import Home from './pages/Home/Home'
 function App() {
 
   return (
     <>
-      <input
-        type='file' multiple
-      />
-      <input
-        type="file"
-        multiple
-        {...{
-          webkitdirectory: "",
-          directory: "",
-        } as React.InputHTMLAttributes<HTMLInputElement>}
-      />  
+      <Home />
     </>
   )
 }

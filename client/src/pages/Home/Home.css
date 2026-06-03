@@ -1,0 +1,192 @@
+/* ============================================================
+   DESIGN TOKENS — All components reference these CSS variables
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  /* Background */
+  --bg-primary: #FAFAFA;
+  --section-alt-bg: #F4F5F7;
+  --footer-bg: #F4F5F7;
+
+  /* Surface */
+  --surface-2: #F0F1F3;
+  --surface-hover: #E8EAED;
+  --card-bg: #FFFFFF;
+  --card-shine: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, transparent 60%);
+  --preview-bg: #FFFFFF;
+  --preview-bar: #F4F5F7;
+  --preview-sidebar: #F9FAFB;
+  --dropzone-bg: rgba(59, 130, 246, 0.03);
+
+  /* Text */
+  --text-primary: #0D0F12;
+  --text-secondary: #4B5563;
+  --text-tertiary: #9CA3AF;
+
+  /* Borders */
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-medium: rgba(0, 0, 0, 0.13);
+
+  /* Accent — electric blue */
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-alt: #7C3AED;
+  --accent-bg: rgba(37, 99, 235, 0.07);
+  --accent-glow: rgba(37, 99, 235, 0.25);
+  --badge-bg: rgba(37, 99, 235, 0.07);
+  --badge-border: rgba(37, 99, 235, 0.2);
+  --accent-bg-item: rgba(37, 99, 235, 0.06);
+
+  /* Shadows */
+  --shadow-nav: rgba(0, 0, 0, 0.08);
+  --shadow-card: rgba(0, 0, 0, 0.12);
+  --preview-shadow: 0 24px 80px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+
+  /* Navbar */
+  --nav-bg-scrolled: rgba(250, 250, 250, 0.85);
+
+  /* Toggle */
+  --toggle-bg: #E5E7EB;
+  --toggle-thumb: #FFFFFF;
+
+  /* Orbs */
+  --orb-1: rgba(37, 99, 235, 0.15);
+  --orb-2: rgba(124, 58, 237, 0.12);
+  --orb-3: rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="dark"] {
+  /* Background */
+  --bg-primary: #0C0D10;
+  --section-alt-bg: #101215;
+  --footer-bg: #0C0D10;
+
+  /* Surface */
+  --surface-2: #1A1C22;
+  --surface-hover: #21242C;
+  --card-bg: #141619;
+  --card-shine: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+  --preview-bg: #141619;
+  --preview-bar: #1A1C22;
+  --preview-sidebar: #111318;
+  --dropzone-bg: rgba(59, 130, 246, 0.04);
+
+  /* Text */
+  --text-primary: #F1F2F5;
+  --text-secondary: #8B929E;
+  --text-tertiary: #555B67;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.065);
+  --border-medium: rgba(255, 255, 255, 0.12);
+
+  /* Accent */
+  --accent: #3B82F6;
+  --accent-hover: #60A5FA;
+  --accent-alt: #8B5CF6;
+  --accent-bg: rgba(59, 130, 246, 0.1);
+  --accent-glow: rgba(59, 130, 246, 0.3);
+  --badge-bg: rgba(59, 130, 246, 0.1);
+  --badge-border: rgba(59, 130, 246, 0.25);
+  --accent-bg-item: rgba(59, 130, 246, 0.08);
+
+  /* Shadows */
+  --shadow-nav: rgba(0, 0, 0, 0.4);
+  --shadow-card: rgba(0, 0, 0, 0.5);
+  --preview-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
+
+  /* Navbar */
+  --nav-bg-scrolled: rgba(12, 13, 16, 0.85);
+
+  /* Toggle */
+  --toggle-bg: #1A1C22;
+  --toggle-thumb: #2D3142;
+
+  /* Orbs */
+  --orb-1: rgba(59, 130, 246, 0.12);
+  --orb-2: rgba(139, 92, 246, 0.1);
+  --orb-3: rgba(37, 99, 235, 0.08);
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.35s ease, color 0.35s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+
+:root {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* ============================================================
+   SCROLL FADE-IN
+   ============================================================ */
+
+.section-fade {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   HOME LAYOUT
+   ============================================================ */
+
+.home {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
