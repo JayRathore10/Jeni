@@ -110,3 +110,19 @@
   color: var(--text-tertiary);
   font-size: 0.85rem;
 }
+
+.auth-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
