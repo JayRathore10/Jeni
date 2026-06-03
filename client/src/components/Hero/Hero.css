@@ -338,11 +338,22 @@
   color: var(--text-primary);
 }
 
-.hp-logo-sq {
+/* .hp-logo-sq {
   width: 20px; height: 20px;
-  background: var(--accent);
+  
   border-radius: 5px;
+} */
+
+.hp-logo-sq {
+  width: 32px;
+  height: 32px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
+
 .hp-sidebar-item {
   display: flex;
   align-items: center;
