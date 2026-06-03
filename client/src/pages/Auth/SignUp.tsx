@@ -62,7 +62,7 @@ export const SignUp: React.FC = () => {
           <span>or</span>
         </div>
         <div className="auth-footer">
-          Already have an account? <a href="/signin">Sign In</a>
+          Already have an account? <a href="/">Sign In</a>
         </div>
       </div>
     </div>

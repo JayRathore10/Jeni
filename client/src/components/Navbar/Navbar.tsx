@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__inner">
-        <a href="/" className="navbar__logo">
+        <a href="/home" className="navbar__logo">
           <span className="navbar__logo-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <rect x="2" y="2" width="8" height="8" rx="5" fill="currentColor" opacity="0.9"/>
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
 
         <div className="navbar__actions">
           <ThemeToggle />
-          <a href="#" className="navbar__btn navbar__btn--ghost">Sign in</a>
+          <a href="/" className="navbar__btn navbar__btn--ghost">Sign in</a>
           <a href="#" className="navbar__btn navbar__btn--primary">Get started free</a>
         </div>
 
