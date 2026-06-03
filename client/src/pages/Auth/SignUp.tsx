@@ -15,8 +15,19 @@ export const SignUp: React.FC = () => {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <h1>Join Jeni</h1>
-          <p>Create your account</p>
+          <div className="auth-logo">
+            <span className="auth-logo-icon">
+              <svg width="56" height="56" viewBox="0 0 22 22" fill="none">
+                <rect x="2" y="2" width="8" height="8" rx="5" fill="currentColor" opacity="0.9" />
+                <rect x="12" y="2" width="8" height="8" rx="2" fill="currentColor" opacity="0.6" />
+                <rect x="2" y="12" width="8" height="8" rx="2" fill="currentColor" opacity="0.6" />
+                <rect x="12" y="12" width="8" height="8" rx="5" fill="currentColor" />
+              </svg>
+            </span>
+          </div>
+
+          <h1>Welcome back</h1>
+          <p>Sign in to continue</p>
         </div>
         <form className="auth-form" onSubmit={handleSubmit}>
           <input

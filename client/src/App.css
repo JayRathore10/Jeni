@@ -23,7 +23,7 @@
 }
 
 .sq-2 {
-  animation: pulse 1.4s infinite 0.15s;
+  animation: pulse 1.4s infinite 0.3s;
 }
 
 .sq-3 {
@@ -31,7 +31,7 @@
 }
 
 .sq-4 {
-  animation: pulse 1.4s infinite 0.45s;
+  animation: pulse 1.4s infinite ;
 }
 
 .ap-loading-text {
