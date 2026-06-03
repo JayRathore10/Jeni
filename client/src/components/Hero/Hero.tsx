@@ -52,13 +52,13 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="hero__social-proof">
-          <div className="hero__avatars">
+          {/* <div className="hero__avatars">
             {['#4F8EF7','#7B61FF','#F97316','#22C55E','#EC4899'].map((c, i) => (
               <div key={i} className="hero__avatar" style={{ background: c }} />
             ))}
-          </div>
+          </div> */}
           <span className="hero__social-text">
-            Trusted by <strong>50,000+</strong> teams worldwide
+            Trusted by <strong>so many</strong> teams worldwide
           </span>
         </div>
       </div>

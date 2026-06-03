@@ -53,14 +53,14 @@ const Stats: React.FC = () => {
         </div>
 
         {/* Logos */}
-        <div className="stats__logos">
+        {/* <div className="stats__logos">
           <p className="stats__logos-text">Trusted by teams at</p>
           <div className="stats__logos-row">
             {['Figma','Shopify','Vercel','Notion','Linear','Framer'].map((name, i) => (
               <div key={i} className="stats__logo-item">{name}</div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
