@@ -70,7 +70,8 @@
 
 /* Drop zone */
 .upload-dropzone {
-  border: 2px dashed var(--border-medium);
+  /* border: 2px dashed var(--border-medium); */
+  border: 2px dashed var(--upload-zone-border);
   border-radius: 16px;
   padding: 2.5rem 2rem;
   display: flex;
@@ -80,7 +81,7 @@
   gap: 0.5rem;
   cursor: pointer;
   position: relative;
-  background: var(--dropzone-bg);
+  background: var(--upload-zone);
   transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   animation: borderPulse 3s ease-in-out infinite;
 }
