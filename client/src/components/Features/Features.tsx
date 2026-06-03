@@ -34,7 +34,7 @@ const features = [
       </svg>
     ),
     title: 'Smart organization',
-    desc: 'AI-powered tagging and categorization. MyBox learns how you work and keeps everything in order.',
+    desc: 'AI-powered tagging and categorization. Jeni learns how you work and keeps everything in order.',
     tag: 'Productivity',
   },
   {

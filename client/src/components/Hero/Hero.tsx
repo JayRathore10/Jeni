@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
         </h1>
 
         <p className="hero__subtext">
-          MyBox is the intelligent cloud file manager built for modern teams.
+          Jeni is the intelligent cloud file manager built for modern teams.
           Organize, share, and collaborate on every file — from anywhere,
           on any device, with zero friction.
         </p>
@@ -68,14 +68,14 @@ const Hero: React.FC = () => {
         <div className="hero__preview">
           <div className="hero__preview-bar">
             <span /><span /><span />
-            <div className="hero__preview-url">mybox.app/files</div>
+            <div className="hero__preview-url">jeni.app/files</div>
           </div>
           <div className="hero__preview-body">
             {/* Sidebar */}
             <div className="hero__preview-sidebar">
               <div className="hp-sidebar-logo">
                 <div className="hp-logo-sq" />
-                <span>MyBox</span>
+                <span>Jeni</span>
               </div>
               {['File manager','Recent files','Favorites','Trash bin'].map((item, i) => (
                 <div key={i} className={`hp-sidebar-item ${i === 0 ? 'hp-sidebar-item--active' : ''}`}>

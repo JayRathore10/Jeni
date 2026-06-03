@@ -42,7 +42,7 @@ const UploadPreview: React.FC = () => {
             Drop it in.<br />We handle the rest.
           </h2>
           <p className="upload-section__desc">
-            Upload anything — from a single screenshot to a 50GB folder. MyBox compresses,
+            Upload anything — from a single screenshot to a 50GB folder. Jeni compresses,
             encrypts, and syncs instantly across all your devices.
           </p>
 

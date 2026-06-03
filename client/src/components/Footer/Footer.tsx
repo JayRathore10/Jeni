@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
                 <rect x="12" y="12" width="8" height="8" rx="2" fill="currentColor"/>
               </svg>
             </span>
-            MyBox
+            Jeni
           </a>
           <p className="footer__tagline">
             The intelligent cloud file manager for modern teams. Store, share, and collaborate — effortlessly.
@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="footer__bottom">
-        <span className="footer__copy">© {new Date().getFullYear()} MyBox, Inc. All rights reserved.</span>
+        <span className="footer__copy">© {new Date().getFullYear()} Jeni, Inc. All rights reserved.</span>
         <div className="footer__bottom-links">
           <a href="#">Privacy</a>
           <a href="#">Terms</a>

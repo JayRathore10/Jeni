@@ -117,7 +117,7 @@ const HowItWorks: React.FC = () => {
         <div className="hiw__cta-wrap">
           <div className="hiw__cta-card">
             <h3 className="hiw__cta-title">Ready to get started?</h3>
-            <p className="hiw__cta-sub">Join 50,000+ teams using MyBox today. Free forever for individuals.</p>
+            <p className="hiw__cta-sub">Join 50,000+ teams using Jeni today. Free forever for individuals.</p>
             <div className="hiw__cta-actions">
               <a href="#" className="hiw__btn hiw__btn--primary">Start for free</a>
               <a href="#" className="hiw__btn hiw__btn--ghost">Talk to sales →</a>
