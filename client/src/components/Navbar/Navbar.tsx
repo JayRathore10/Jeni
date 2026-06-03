@@ -18,10 +18,10 @@ const Navbar: React.FC = () => {
         <a href="/" className="navbar__logo">
           <span className="navbar__logo-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect x="2" y="2" width="8" height="8" rx="2" fill="currentColor" opacity="0.9"/>
+              <rect x="2" y="2" width="8" height="8" rx="5" fill="currentColor" opacity="0.9"/>
               <rect x="12" y="2" width="8" height="8" rx="2" fill="currentColor" opacity="0.6"/>
               <rect x="2" y="12" width="8" height="8" rx="2" fill="currentColor" opacity="0.6"/>
-              <rect x="12" y="12" width="8" height="8" rx="2" fill="currentColor"/>
+              <rect x="12" y="12" width="8" height="8" rx="5" fill="currentColor"/>
             </svg>
           </span>
           <span className="navbar__logo-text">Jeni</span>
