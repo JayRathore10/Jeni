@@ -8,7 +8,7 @@ import Stats from '../../components/Stats/Stats';
 import HowItWorks from '../../components/HowItWorks/HowItWorks';
 import Footer from '../../components/Footer/Footer';
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   return (
     <div className="home">
       <Navbar />
@@ -23,5 +23,3 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
-export default Home;

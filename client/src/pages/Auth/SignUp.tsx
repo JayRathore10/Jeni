@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Auth.css";
 
-const SignUp: React.FC = () => {
+export const SignUp: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,5 +57,3 @@ const SignUp: React.FC = () => {
     </div>
   );
 };
-
-export default SignUp;
