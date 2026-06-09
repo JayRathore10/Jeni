@@ -1,13 +1,14 @@
 import express  , {Request , Response} from "express";
 import { multerRouter } from "./routes/multer.routes";
 import authRouter from "./routes/auth.routes";
+import { FRONTEND } from "./configs/env.config";
 import cors from "cors";
 
 const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: "http://localhost:5173" , 
+  origin: FRONTEND , 
   methods: ["GET", "POST" , "DELETE" , "PUT"],
   credentials: true
 }));
