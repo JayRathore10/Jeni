@@ -8,4 +8,5 @@ export const {
   SALT_ROUND , 
   JWT_SECRET,  
   FRONTEND , 
+  TEST
 } = process.env;
