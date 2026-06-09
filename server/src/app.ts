@@ -1,5 +1,6 @@
 import express  , {Request , Response} from "express";
 import { multerRouter } from "./routes/multer.routes";
+import authRouter from "./routes/auth.routes";
 import cors from "cors";
 
 const app = express();
@@ -17,5 +18,6 @@ app.get("/"  , (req : Request, res : Response)=>{
 })
 
 app.use("/multer", multerRouter);
+app.use("/api/v1/auth" , authRouter);
 
 export default app;
