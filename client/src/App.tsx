@@ -14,6 +14,10 @@ const SignUp = lazy(() =>
   import("./pages/Auth/SignUp")
 )
 
+const Profile = lazy(()=>
+  import("./pages/Profile/Profile")
+)
+
 const LoadingScreen = () => (
   <div className="ap-loading-container">
     <div className="ap-loading-logo">
@@ -51,6 +55,12 @@ function App() {
             path="/signup"
             element={
               <SignUp />
+            }
+          />
+          <Route
+            path="/profile" 
+            element={
+              <Profile/>
             }
           />
         </Routes>
