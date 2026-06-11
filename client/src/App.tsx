@@ -1,23 +1,17 @@
-import { lazy, Suspense} from "react";
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import './App.css'
 
 const Home = lazy(() =>
-  import("./pages/Home/Home").then((module) => ({
-    default: module.Home,
-  }))
+  import("./pages/Home/Home")
 )
 
 const SignIn = lazy(() =>
-  import("./pages/Auth/SignIn").then((module) => ({
-    default: module.SignIn
-  }))
+  import("./pages/Auth/SignIn")
 )
 
 const SignUp = lazy(() =>
-  import("./pages/Auth/SignUp").then((module) => ({
-    default: module.SignUp
-  }))
+  import("./pages/Auth/SignUp")
 )
 
 const LoadingScreen = () => (
