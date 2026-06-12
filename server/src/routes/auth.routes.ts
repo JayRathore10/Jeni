@@ -5,6 +5,8 @@ const router = Router();
 
 router.get("/test" , test);
 
+// Have to add there logic here 
+
 router.post("/sign-in");
 router.post("/sign-up");
 router.get("/logout");
