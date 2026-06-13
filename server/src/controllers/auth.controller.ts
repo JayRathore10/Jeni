@@ -4,8 +4,6 @@ import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { JWT_SECRET } from "../configs/env.config";
 import { JWT_EXPIRES_IN } from "../configs/env.config";
 import { User } from "../models/user.model";
-import { signinSchema } from "../validators/auth.validator";
-import { signupSchema } from "../validators/auth.validator";
 
 const secret: Secret = JWT_SECRET!;
 
@@ -26,18 +24,7 @@ export const signup = async (
   res: Response
 ): Promise<void> => {
   try {
-
-    const parsed = signupSchema.safeParse(req.body);
-
-    if (!parsed.success) {
-      res.status(400).json({
-        success: false,
-        errors: parsed.error.flatten().fieldErrors,
-      });
-      return;
-    }
-
-    const { name, email, password } = parsed.data;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       res.status(400).json({
@@ -97,19 +84,8 @@ export const signin = async (
   res: Response
 ): Promise<void> => {
   try {
+    const { email, password } = req.body;
 
-    const parsed = signinSchema.safeParse(req.body);
-
-    if (!parsed.success) {
-      res.status(400).json({
-        success: false,
-        errors: parsed.error.flatten().fieldErrors,
-      });
-      return;
-    }
-
-    const { email, password } = parsed.data;
-    
     if (!email || !password) {
       res.status(400).json({
         success: false,
