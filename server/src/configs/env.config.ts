@@ -8,5 +8,6 @@ export const {
   SALT_ROUND , 
   JWT_SECRET,  
   FRONTEND , 
+  JWT_EXPIRES_IN , 
   TEST
 } = process.env;
