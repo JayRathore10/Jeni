@@ -1,14 +1,13 @@
 import { Router } from "express";
 import { changePassword, getProfile, updateProfile } from "../controllers/user.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 const router =  Router();
 
-// protected routes
+router.get("/me", authMiddleware, getProfile);
 
-router.get("/profile/:userId" , getProfile );
+router.patch("/me", authMiddleware, updateProfile);
 
-router.patch("/me" , updateProfile );
-
-router.patch("/change-password"  , changePassword);
+router.patch("/change-password", authMiddleware, changePassword);;
 
 export default router;
