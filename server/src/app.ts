@@ -4,7 +4,6 @@ import authRouter from "./routes/auth.routes";
 import { FRONTEND } from "./configs/env.config";
 import userRouter from "./routes/user.routes";
 import cors from "cors";
-import userRouter from '.';
 
 const app = express();
 app.use(express.json());
