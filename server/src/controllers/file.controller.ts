@@ -88,3 +88,81 @@ export const createFile = async (
     next(err);
   }
 };
+
+export const updateFile = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { fileId } = req.params;
+
+    const file = await File.findOneAndUpdate(
+      {
+        _id: fileId,
+        owner: req.user?.userId,
+        isDeleted: false,
+      },
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!file) {
+      res.status(404).json({
+        success: false,
+        message: "File not found",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: file,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteFile = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { fileId } = req.params;
+
+    const file = await File.findOneAndUpdate(
+      {
+        _id: fileId,
+        owner: req.user?.userId,
+      },
+      {
+        isDeleted: true,
+      },
+      {
+        new: true,
+      }
+    );
+
+    if (!file) {
+      res.status(404).json({
+        success: false,
+        message: "File not found",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "File deleted successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};

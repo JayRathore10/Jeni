@@ -8,5 +8,7 @@ const router = Router();
 router.get("/"  , authMiddleware , getFiles);
 router.get("/:fileId" , authMiddleware , getFileById);
 router.post("/" , authMiddleware , upload.single("file") , createFile);
+router.patch("/:fileId", authMiddleware, updateFile);
+router.delete("/:fileId", authMiddleware, deleteFile);
 
 export default router;
