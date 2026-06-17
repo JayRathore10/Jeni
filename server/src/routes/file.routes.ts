@@ -1,6 +1,6 @@
 import {Router}  from "express";
 import { authMiddleware } from "../middleware/auth.middleware";
-import { createFile, getFileById, getFiles } from "../controllers/file.controller";
+import { createFile, deleteFile, getFileById, getFiles, updateFile } from "../controllers/file.controller";
 import { upload } from "../middleware/multer.middleware";
 
 const router = Router();
