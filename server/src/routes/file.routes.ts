@@ -11,4 +11,6 @@ router.post("/" , authMiddleware , upload.single("file") , createFile);
 router.patch("/:fileId", authMiddleware, updateFile);
 router.delete("/:fileId", authMiddleware, deleteFile);
 
-export default router;
+// have to check all the controller 
+
+export default router;  
