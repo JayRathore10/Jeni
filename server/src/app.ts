@@ -3,6 +3,7 @@ import authRouter from "./routes/auth.routes";
 import { FRONTEND } from "./configs/env.config";
 import userRouter from "./routes/user.routes";
 import folderRouter from "./routes/folder.routes";
+import fileRouter from "./routes/file.routes";
 import cors from "cors";
 
 const app = express();
@@ -22,5 +23,6 @@ app.get("/"  , (req : Request, res : Response)=>{
 app.use("/api/v1/auth" , authRouter);
 app.use("/api/v1/users" , userRouter);
 app.use("/api/v1/folder" , folderRouter);
+app.use("/api/v1/file" , fileRouter);
 
 export default app;
