@@ -26,3 +26,8 @@ app.use("/api/v1/folder" , folderRouter);
 app.use("/api/v1/file" , fileRouter);
 
 export default app;
+
+/**
+ * I have to find out understanding about all the apis and also add the proper docs to it 
+ * add UI and pages 
+ */
