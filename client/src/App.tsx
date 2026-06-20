@@ -72,3 +72,5 @@ function App() {
 export default App
 
 // Have  to add dashboard 
+// Add User profile page 
+// Chnage UI of signin and signup {left side logo and right side form}
