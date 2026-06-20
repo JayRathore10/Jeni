@@ -5,7 +5,7 @@ import {
   getMyShareLinks,
   deleteShareLink,
   incrementDownloadCount,
-} from "../controllers/shareLink.controller";
+} from "../controllers/sharedLink.controller";
 
 const router = Router();
 
