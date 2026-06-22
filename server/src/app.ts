@@ -30,4 +30,5 @@ export default app;
 /**
  * I have to find out understanding about all the apis and also add the proper docs to it 
  * add UI and pages 
+ * change in layout and made New stylish pages 
  */
