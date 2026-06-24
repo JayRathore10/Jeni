@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import crypto from "crypto";
-import { ShareLink } from "../models/ShareLink.model";
+import { ShareLink } from "../models/shareLink.model";
 // Create Share Link
 export const createShareLink = async (req: Request, res: Response) => {
   try {
