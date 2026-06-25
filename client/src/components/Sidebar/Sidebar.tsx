@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import './Sidebar.css';
 import StorageMeter from '../StorageMeter/StorageMeter';
 import NewButton from '../NewButton/NewButton';
