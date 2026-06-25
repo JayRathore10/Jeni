@@ -1,0 +1,28 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.dashboard__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+.dashboard__content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+  .dashboard {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+}
