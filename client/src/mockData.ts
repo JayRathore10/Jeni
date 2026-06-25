@@ -1,4 +1,4 @@
-import { FileItem } from './types';
+import type { FileItem } from "./types/types";
 
 export const mockFiles: FileItem[] = [
   { id: 'f1', name: 'Product Launch', kind: 'folder', size: null, owner: 'You', modified: '2026-06-20T10:00:00Z', starred: true, shared: true, color: '#FF8A9D' },
