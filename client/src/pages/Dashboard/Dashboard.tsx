@@ -19,7 +19,7 @@ interface ContextMenuState {
 const Dashboard: React.FC = () => {
   const [files, setFiles] = useState<FileItem[]>(mockFiles);
   const [activeNav, setActiveNav] = useState('my-files');
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [sortKey, setSortKey] = useState<SortKey>('name');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());

@@ -18,6 +18,10 @@ const Profile = lazy(()=>
   import("./pages/Profile/Profile")
 )
 
+const Dashboard = lazy(()=>
+  import("./pages/Dashboard/Dashboard")
+)
+
 const LoadingScreen = () => (
   <div className="ap-loading-container">
     <div className="ap-loading-logo">
@@ -61,6 +65,12 @@ function App() {
             path="/profile" 
             element={
               <Profile/>
+            }
+          />
+          <Route
+            path="/dashboard" 
+            element={
+              <Dashboard/>
             }
           />
         </Routes>
