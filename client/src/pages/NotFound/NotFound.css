@@ -1,0 +1,135 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 2rem;
+  text-align: center;
+}
+
+.not-found__content {
+  max-width: 600px;
+  width: 100%;
+}
+
+.not-found__illustration {
+  position: relative;
+  height: 200px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(20px);
+}
+
+.not-found__orb--1 {
+  width: 120px;
+  height: 120px;
+  background: var(--orb-1);
+  z-index: 1;
+}
+
+.not-found__orb--2 {
+  width: 100px;
+  height: 100px;
+  background: var(--orb-2);
+  margin-left: 40px;
+  z-index: 2;
+}
+
+.not-found__orb--3 {
+  width: 80px;
+  height: 80px;
+  background: var(--orb-3);
+  margin-left: -40px;
+  z-index: 3;
+}
+
+.not-found__error-code {
+  font-size: 8rem;
+  font-weight: 700;
+  color: var(--text);
+  z-index: 4;
+  text-shadow: 0 4px 12px var(--shadow);
+}
+
+.not-found__title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.not-found__subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.not-found__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.not-found__button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--accent-glow);
+  transition: all 0.2s ease;
+}
+
+.not-found__button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.not-found__button:active {
+  transform: translateY(0);
+}
+
+.not-found__button--secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.not-found__button--secondary:hover {
+  background: var(--surface-hover, var(--surface));
+}
+
+@media (max-width: 640px) {
+  .not-found__error-code {
+    font-size: 5rem;
+  }
+
+  .not-found__title {
+    font-size: 1.6rem;
+  }
+
+  .not-found__subtitle {
+    font-size: 1rem;
+  }
+
+  .not-found__actions {
+    flex-direction: column;
+  }
+
+  .not-found__button {
+    width: 100%;
+  }
+}

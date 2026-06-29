@@ -22,6 +22,10 @@ const Dashboard = lazy(()=>
   import("./pages/Dashboard/Dashboard")
 )
 
+const NotFound = lazy(()=>
+  import("./pages/NotFound/NotFound")
+)
+
 const LoadingScreen = () => (
   <div className="ap-loading-container">
     <div className="ap-loading-logo">
@@ -73,6 +77,12 @@ function App() {
               <Dashboard/>
             }
           />
+          <Route 
+            path="*"
+            element={
+              <NotFound/>
+            }
+          />
         </Routes>
       </Suspense>
     </>
@@ -82,5 +92,3 @@ function App() {
 export default App
 
 // understand about the api and add docker 
-// Chnage UI of signin and signup {left side logo and right side form}
-// new start 
