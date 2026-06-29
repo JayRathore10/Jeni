@@ -3,7 +3,7 @@ import './Sidebar.css';
 import StorageMeter from '../StorageMeter/StorageMeter';
 import NewButton from '../NewButton/NewButton';
 
-interface NavItem { 
+interface NavItem {
   id: string;
   label: string;
   icon: JSX.Element;
@@ -47,8 +47,29 @@ const Sidebar: React.FC<Props> = ({ activeNav, onNavChange, onCreateFolder, onUp
 
   return (
     <aside className={`sidebar ${collapsed ? 'sidebar--collapsed' : ''}`}>
+      <div className="sidebar__logo">
+        <div className="auth-logo">
+          <span className="auth-logo-icon">
+            <svg width="56" height="56" viewBox="0 0 22 22" fill="none">
+              <rect x="2" y="2" width="8" height="8" rx="5" fill="currentColor" opacity="0.9" />
+              <rect x="12" y="2" width="8" height="8" rx="2" fill="currentColor" opacity="0.6" />
+              <rect x="2" y="12" width="8" height="8" rx="2" fill="currentColor" opacity="0.6" />
+              <rect x="12" y="12" width="8" height="8" rx="5" fill="currentColor" />
+            </svg>
+          </span>
+
+          {!collapsed && (
+            <span className="sidebar__logo-text">Jeni</span> 
+      )}
+        </div>
+      </div>
+
       <div className="sidebar__new-wrap">
-        <NewButton onCreateFolder={onCreateFolder} onUploadClick={() => fileInputRef.current?.click()} collapsed={collapsed} />
+        <NewButton
+          onCreateFolder={onCreateFolder}
+          onUploadClick={() => fileInputRef.current?.click()}
+          collapsed={collapsed}
+        />
         <input
           ref={fileInputRef}
           type="file"

@@ -122,3 +122,42 @@
   padding-top: 1rem;
   margin-top: 0.5rem;
 }
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  padding: 0px 20px 14px;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6366f1; /* Your brand color */
+}
+
+.auth-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-logo-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.sidebar__logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.sidebar--collapsed .sidebar__logo {
+  justify-content: center;
+  padding: 18px 0;
+}
+
+.sidebar--collapsed .sidebar__logo-text {
+  display: none;
+}
