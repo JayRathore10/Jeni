@@ -92,3 +92,4 @@ function App() {
 export default App
 
 // understand about the api and add docker 
+// Have to thme change theme to dark in settings 
