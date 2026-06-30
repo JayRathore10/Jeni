@@ -26,7 +26,8 @@ const SignUp: React.FC = () => {
       alert(data.message);
 
       navigate("/dashboard");
-    } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error : any) {
       alert(error.response?.data?.message || "Signup failed");
     }
   };
