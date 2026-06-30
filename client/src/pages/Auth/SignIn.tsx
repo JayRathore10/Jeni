@@ -1,13 +1,37 @@
 import React, { useState } from "react";
+import api from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign In:", { email, password });
+      try {
+    const { data } = await api.post("/auth/sign-in", {
+      email,
+      password,
+    });
+
+    // Save token
+    localStorage.setItem("token", data.token);
+
+    // Save user data
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    alert(data.message);
+
+    // Redirect to dashboard
+    navigate("/dashboard");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    alert(error.response?.data?.message || "Login failed");
+    console.error(error);
+  }
   };
 
   return (
