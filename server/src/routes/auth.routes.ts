@@ -11,11 +11,3 @@ router.post("/sign-up"  , validate(signupSchema) , signup);
 router.get("/logout" , logout);
 
 export default router;
-
-/**
- * 
- * User Routes : 
- * User controller -> profile 
- * and daskoard banana hai 
- * 
- */
