@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../api/axios";
 import "./Auth.css";
 
 const SignUp: React.FC = () => {
@@ -6,9 +8,27 @@ const SignUp: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign Up:", { name, email, password });
+
+    try {
+      const { data } = await api.post("/auth/sign-up", {
+        name,
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      alert(data.message);
+
+      navigate("/dashboard");
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Signup failed");
+    }
   };
 
   return (

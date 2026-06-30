@@ -6,7 +6,7 @@ const Home = lazy(() =>
   import("./pages/Home/Home")
 )
 
-const SignIn = lazy(() =>
+const SignIn = lazy(() => 
   import("./pages/Auth/SignIn")
 )
 
