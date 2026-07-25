@@ -7,7 +7,7 @@ import FileGrid from '../../components/FileGrid/FileGrid';
 import FileList from '../../components/FileList/FileList';
 import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import UploadDropOverlay from '../../components/UploadDropOverlay/UploadDropOverlay';
-import { mockFiles } from '../../mockData';
+import { useFileSystem } from '../../hooks/useFileSystem';
 import type { FileItem, SortDir, SortKey, ViewMode, BreadcrumbItem } from '../../types/types';
 
 interface ContextMenuState {
@@ -17,7 +17,6 @@ interface ContextMenuState {
 }
 
 const Dashboard: React.FC = () => {
-  const [files, setFiles] = useState<FileItem[]>(mockFiles);
   const [activeNav, setActiveNav] = useState('my-files');
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [sortKey, setSortKey] = useState<SortKey>('name');
@@ -29,6 +28,18 @@ const Dashboard: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([{ id: 'root', label: 'My files' }]);
   const dragCounter = useRef(0);
+
+  const currentFolderId = breadcrumbs.length > 1 ? breadcrumbs[breadcrumbs.length - 1].id : null;
+
+  const {
+    items: files,
+    loading,
+    error,
+    handleUpload,
+    handleCreateFolder,
+    handleRename,
+    handleDelete,
+  } = useFileSystem(currentFolderId);
 
   // --- Filtering & sorting ---
   const visibleFiles = useMemo(() => {
@@ -73,7 +84,6 @@ const Dashboard: React.FC = () => {
     if (item.kind === 'folder') {
       setBreadcrumbs((prev) => [...prev, { id: item.id, label: item.name }]);
     }
-    // For files: would open a preview modal in a full implementation
   }, []);
 
   const handleBreadcrumbClick = useCallback((id: string) => {
@@ -84,7 +94,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const handleToggleStar = useCallback((id: string) => {
-    setFiles((prev) => prev.map((f) => (f.id === id ? { ...f, starred: !f.starred } : f)));
+    console.log("Toggle star for", id);
   }, []);
 
   const handleContextMenu = useCallback((e: React.MouseEvent, item: FileItem) => {
@@ -92,53 +102,43 @@ const Dashboard: React.FC = () => {
     setSelectedIds(new Set([item.id]));
   }, []);
 
-  const handleContextAction = useCallback((action: string, item: FileItem) => {
-    if (action === 'star') {
-      handleToggleStar(item.id);
-    } else if (action === 'delete') {
-      setFiles((prev) => prev.filter((f) => f.id !== item.id));
-    } else if (action === 'open') {
-      handleOpen(item);
+  const handleContextAction = useCallback(async (action: string, item: FileItem) => {
+    try {
+      if (action === 'star') {
+        handleToggleStar(item.id);
+      } else if (action === 'delete') {
+        await handleDelete(item);
+      } else if (action === 'open') {
+        handleOpen(item);
+      } else if (action === 'rename') {
+        const newName = prompt("Enter new name:", item.name);
+        if (newName && newName.trim() !== item.name) {
+          await handleRename(item, newName.trim());
+        }
+      }
+    } catch (err: any) {
+      console.error(err.message || 'Action failed');
     }
-    // rename / share / download / copy would hook into real backend logic here
-  }, [handleToggleStar, handleOpen]);
+  }, [handleToggleStar, handleOpen, handleDelete, handleRename]);
 
-  const addUploadedFiles = useCallback((fileList: FileList) => {
-    const newItems: FileItem[] = Array.from(fileList).map((file, i) => ({
-      id: `upload-${Date.now()}-${i}`,
-      name: file.name,
-      kind: file.type.startsWith('image/') ? 'image'
-        : file.type.startsWith('video/') ? 'video'
-        : file.type.startsWith('audio/') ? 'audio'
-        : file.name.endsWith('.pdf') ? 'pdf'
-        : file.name.endsWith('.zip') ? 'archive'
-        : file.name.match(/\.(xlsx|xls|csv)$/) ? 'sheet'
-        : file.name.match(/\.(pptx|ppt)$/) ? 'slide'
-        : file.name.match(/\.(docx|doc|txt)$/) ? 'doc'
-        : 'other',
-      size: file.size,
-      owner: 'You',
-      modified: new Date().toISOString(),
-      starred: false,
-      shared: false,
-    }));
-    setFiles((prev) => [...newItems, ...prev]);
-  }, []);
+  const onUploadFiles = useCallback(async (fileList: FileList) => {
+    try {
+      await handleUpload(fileList);
+    } catch (err: any) {
+      console.error(err.message || 'Failed to upload files');
+    }
+  }, [handleUpload]);
 
-  const handleCreateFolder = useCallback(() => {
-    const newFolder: FileItem = {
-      id: `folder-${Date.now()}`,
-      name: 'Untitled folder',
-      kind: 'folder',
-      size: null,
-      owner: 'You',
-      modified: new Date().toISOString(),
-      starred: false,
-      shared: false,
-      color: '#FF8A9D',
-    };
-    setFiles((prev) => [newFolder, ...prev]);
-  }, []);
+  const onCreateFolder = useCallback(async () => {
+    const name = prompt("Enter folder name:", "Untitled folder");
+    if (name && name.trim()) {
+      try {
+        await handleCreateFolder(name.trim());
+      } catch (err: any) {
+        console.error(err.message || 'Failed to create folder');
+      }
+    }
+  }, [handleCreateFolder]);
 
   // --- Drag and drop (page-level) ---
   const handleDragEnter = useCallback((e: React.DragEvent) => {
@@ -165,9 +165,9 @@ const Dashboard: React.FC = () => {
     dragCounter.current = 0;
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      addUploadedFiles(e.dataTransfer.files);
+      onUploadFiles(e.dataTransfer.files);
     }
-  }, [addUploadedFiles]);
+  }, [onUploadFiles]);
 
   return (
     <div
@@ -180,8 +180,8 @@ const Dashboard: React.FC = () => {
       <Sidebar
         activeNav={activeNav}
         onNavChange={setActiveNav}
-        onCreateFolder={handleCreateFolder}
-        onUploadFiles={addUploadedFiles}
+        onCreateFolder={onCreateFolder}
+        onUploadFiles={onUploadFiles}
         collapsed={sidebarCollapsed}
       />
 
@@ -203,7 +203,23 @@ const Dashboard: React.FC = () => {
             itemCount={visibleFiles.length}
           />
 
-          {viewMode === 'grid' ? (
+          {error && (
+            <div className="dashboard__error">
+              <p>Error: {error}</p>
+            </div>
+          )}
+
+          {loading ? (
+            <div className="dashboard__loading">
+              <div className="spinner"></div>
+              <p>Loading your files...</p>
+            </div>
+          ) : visibleFiles.length === 0 && !error ? (
+            <div className="dashboard__empty">
+              <h2>Nothing here yet</h2>
+              <p>Drag and drop files to upload, or create a new folder.</p>
+            </div>
+          ) : viewMode === 'grid' ? (
             <FileGrid
               items={visibleFiles}
               selectedIds={selectedIds}

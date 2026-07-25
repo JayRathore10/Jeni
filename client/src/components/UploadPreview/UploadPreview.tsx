@@ -9,7 +9,7 @@ const files = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const FileIcon: React.FC<{ type: string; color: string }> = ({ type, color }) => (
+const FileIcon: React.FC<{ type: string; color: string }> = ({ color }) => (
   <div className="upload-file-icon" style={{ background: `${color}18`, border: `1px solid ${color}30` }}>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <rect x="2" y="1" width="9" height="12" rx="1.5" fill={color} opacity="0.2"/>
