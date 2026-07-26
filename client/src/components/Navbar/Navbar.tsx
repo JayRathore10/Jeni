@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css';
+import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -37,7 +40,7 @@ const Navbar: React.FC = () => {
         <div className="navbar__actions">
           <ThemeToggle />
           <a href="/" className="navbar__btn navbar__btn--ghost">Sign in</a>
-          <a href="#" className="navbar__btn navbar__btn--primary">Get started free</a>
+          <a href="#" className="navbar__btn navbar__btn--primary" onClick={() => navigate('/signup')}>Get started free</a>
         </div>
 
         <button
