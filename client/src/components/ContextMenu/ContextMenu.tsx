@@ -49,6 +49,7 @@ const ContextMenu: React.FC<Props> = ({ item, x, y, onClose, onAction }) => {
     { key: 'share', label: 'Share', icon: icon('M9 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM17 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM2.5 19c0-3 2.9-5.5 6.5-5.5s6.5 2.5 6.5 5.5M14 13.8c2.6.3 4.5 2.1 4.5 4.2') },
     { key: 'download', label: 'Download', icon: icon('M12 16V4M7.5 11.5L12 16l4.5-4.5M4 20h16'), hideForFolder: true },
     { key: 'star', label: item.starred ? 'Remove from starred' : 'Add to starred', icon: icon('M12 2.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8z') },
+    { key: 'move', label: 'Move to...', icon: icon('M14 5l7 7m0 0l-7 7m7-7H3') },
     { key: 'copy', label: 'Make a copy', icon: icon('M8 8V4.5c0-.83.67-1.5 1.5-1.5h9c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H15M5.5 8h9c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5h-9c-.83 0-1.5-.67-1.5-1.5v-9c0-.83.67-1.5 1.5-1.5z') },
     { divider: true },
     { key: 'delete', label: 'Move to trash', icon: icon('M4 7h16M9 7V4.5c0-.6.4-1 1-1h4c.6 0 1 .4 1 1V7M6 7l1 12.5c.05.8.7 1.5 1.5 1.5h7c.8 0 1.45-.7 1.5-1.5L18 7'), danger: true },

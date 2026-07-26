@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getFiles, uploadFile, renameFile, deleteFile } from '../api/file.service';
-import { getFolders, getFolderContents, createFolder, renameFolder, deleteFolder } from '../api/folder.service';
+import { getFiles, uploadFile, updateFile, deleteFile, copyFile, downloadFile } from '../api/file.service';
+import { getFolders, getFolderContents, createFolder, updateFolder, deleteFolder, copyFolder } from '../api/folder.service';
 import { mapBackendFileToItem, mapBackendFolderToItem } from '../types/types';
 import type { FileItem } from '../types/types';
 
@@ -72,13 +72,54 @@ export const useFileSystem = (currentFolderId: string | null) => {
   const handleRename = async (item: FileItem, newName: string) => {
     try {
       if (item.kind === 'folder') {
-        await renameFolder(item.id, newName);
+        await updateFolder(item.id, { name: newName });
       } else {
-        await renameFile(item.id, newName);
+        await updateFile(item.id, { name: newName });
       }
       await fetchItems();
     } catch (err: any) {
       throw new Error(err.response?.data?.message || 'Failed to rename item');
+    }
+  };
+
+  const handleMove = async (item: FileItem, targetFolderId: string | null) => {
+    try {
+      if (item.kind === 'folder') {
+        await updateFolder(item.id, { parentFolder: targetFolderId });
+      } else {
+        await updateFile(item.id, { folderId: targetFolderId });
+      }
+      await fetchItems();
+    } catch (err: any) {
+      throw new Error(err.response?.data?.message || 'Failed to move item');
+    }
+  };
+
+  const handleCopy = async (item: FileItem, targetFolderId: string | null = null) => {
+    try {
+      if (item.kind === 'folder') {
+        await copyFolder(item.id, targetFolderId);
+      } else {
+        await copyFile(item.id);
+        // If targetFolderId is provided and different from current, we'd move it after copying
+        // but for now, backend copy puts it in the same folder. 
+        // If we want it in targetFolderId, we could update it immediately.
+        // For simplicity, we just copy to current directory first, or we can update copyFile to take folderId.
+      }
+      await fetchItems();
+    } catch (err: any) {
+      throw new Error(err.response?.data?.message || 'Failed to copy item');
+    }
+  };
+
+  const handleDownload = async (item: FileItem) => {
+    if (item.kind === 'folder') {
+      throw new Error("Cannot download folders yet");
+    }
+    try {
+      await downloadFile(item.id, item.name);
+    } catch (err: any) {
+      throw new Error(err.response?.data?.message || 'Failed to download file');
     }
   };
 
@@ -103,6 +144,9 @@ export const useFileSystem = (currentFolderId: string | null) => {
     handleUpload,
     handleCreateFolder,
     handleRename,
+    handleMove,
+    handleCopy,
+    handleDownload,
     handleDelete,
   };
 };

@@ -15,12 +15,17 @@ export const createFolder = async (name: string, parentFolder: string | null = n
   return data.data;
 };
 
-export const renameFolder = async (folderId: string, name: string) => {
-  const { data } = await api.patch(`/folder/${folderId}`, { name });
+export const updateFolder = async (folderId: string, updates: any) => {
+  const { data } = await api.patch(`/folder/${folderId}`, updates);
   return data.data;
 };
 
 export const deleteFolder = async (folderId: string) => {
   const { data } = await api.delete(`/folder/${folderId}`);
   return data;
+};
+
+export const copyFolder = async (folderId: string, parentFolder: string | null = null) => {
+  const { data } = await api.post(`/folder/${folderId}/copy`, { parentFolder });
+  return data.data;
 };

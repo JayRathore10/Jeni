@@ -7,6 +7,8 @@ import FileGrid from '../../components/FileGrid/FileGrid';
 import FileList from '../../components/FileList/FileList';
 import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import UploadDropOverlay from '../../components/UploadDropOverlay/UploadDropOverlay';
+import FilePreviewModal from '../../components/FilePreviewModal/FilePreviewModal';
+import FolderPickerModal from '../../components/FolderPickerModal/FolderPickerModal';
 import { useFileSystem } from '../../hooks/useFileSystem';
 import type { FileItem, SortDir, SortKey, ViewMode, BreadcrumbItem } from '../../types/types';
 
@@ -26,6 +28,8 @@ const Dashboard: React.FC = () => {
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [previewItem, setPreviewItem] = useState<FileItem | null>(null);
+  const [itemToMove, setItemToMove] = useState<FileItem | null>(null);
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([{ id: 'root', label: 'My files' }]);
   const dragCounter = useRef(0);
 
@@ -38,6 +42,9 @@ const Dashboard: React.FC = () => {
     handleUpload,
     handleCreateFolder,
     handleRename,
+    handleMove,
+    handleCopy,
+    handleDownload,
     handleDelete,
   } = useFileSystem(currentFolderId);
 
@@ -83,6 +90,8 @@ const Dashboard: React.FC = () => {
   const handleOpen = useCallback((item: FileItem) => {
     if (item.kind === 'folder') {
       setBreadcrumbs((prev) => [...prev, { id: item.id, label: item.name }]);
+    } else {
+      setPreviewItem(item);
     }
   }, []);
 
@@ -115,11 +124,17 @@ const Dashboard: React.FC = () => {
         if (newName && newName.trim() !== item.name) {
           await handleRename(item, newName.trim());
         }
+      } else if (action === 'move') {
+        setItemToMove(item);
+      } else if (action === 'copy') {
+        await handleCopy(item, currentFolderId);
+      } else if (action === 'download') {
+        await handleDownload(item);
       }
     } catch (err: any) {
       console.error(err.message || 'Action failed');
     }
-  }, [handleToggleStar, handleOpen, handleDelete, handleRename]);
+  }, [handleToggleStar, handleOpen, handleDelete, handleRename, handleCopy, handleDownload, currentFolderId]);
 
   const onUploadFiles = useCallback(async (fileList: FileList) => {
     try {
@@ -139,6 +154,17 @@ const Dashboard: React.FC = () => {
       }
     }
   }, [handleCreateFolder]);
+
+  const onConfirmMove = useCallback(async (targetFolderId: string | null) => {
+    if (itemToMove) {
+      try {
+        await handleMove(itemToMove, targetFolderId);
+        setItemToMove(null);
+      } catch (err: any) {
+        console.error(err.message || 'Failed to move item');
+      }
+    }
+  }, [itemToMove, handleMove]);
 
   // --- Drag and drop (page-level) ---
   const handleDragEnter = useCallback((e: React.DragEvent) => {
@@ -250,6 +276,21 @@ const Dashboard: React.FC = () => {
           onAction={handleContextAction}
         />
       )}
+
+      {previewItem && (
+        <FilePreviewModal
+          item={previewItem}
+          onClose={() => setPreviewItem(null)}
+          onDownload={handleDownload}
+        />
+      )}
+
+      <FolderPickerModal
+        isOpen={!!itemToMove}
+        onClose={() => setItemToMove(null)}
+        onMove={onConfirmMove}
+        title={itemToMove ? `Move "${itemToMove.name}" to...` : 'Move to...'}
+      />
 
       <UploadDropOverlay visible={isDragging} />
     </div>

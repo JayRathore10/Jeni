@@ -8,6 +8,7 @@ import {
   updateFolder,
   deleteFolder,
   getFolderContents,
+  copyFolder,
 } from "../controllers/folder.controller";
 
 const router = Router();
@@ -41,5 +42,10 @@ router.patch("/:folderId", authMiddleware, updateFolder);
  * DELETE FOLDER
  */
 router.delete("/:folderId", authMiddleware, deleteFolder);
+
+/**
+ * COPY FOLDER
+ */
+router.post("/:folderId/copy", authMiddleware, copyFolder);
 
 export default router;
