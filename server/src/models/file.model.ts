@@ -19,6 +19,8 @@ export interface IFile extends Document {
 
   isDeleted: boolean;
 
+  deletedAt: Date | null;
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -75,6 +77,12 @@ const FileSchema = new Schema<IFile>(
     isDeleted: {
       type: Boolean,
       default: false,
+      index: true,
+    },
+
+    deletedAt: {
+      type: Date,
+      default: null,
       index: true,
     },
   },

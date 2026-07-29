@@ -5,13 +5,14 @@ import userRouter from "./routes/user.routes";
 import folderRouter from "./routes/folder.routes";
 import fileRouter from "./routes/file.routes";
 import cors from "cors";
+import trashRouter from "./routes/trash.routes";
 
 const app = express();
 app.use(express.json());
 
 app.use(cors({
   origin: FRONTEND , 
-  methods: ["GET", "POST" , "DELETE" , "PUT"],
+  methods: ["GET", "POST" , "DELETE" , "PUT" , "PATCH"],
   credentials: true
 }));
 
@@ -24,6 +25,7 @@ app.use("/api/v1/auth" , authRouter);
 app.use("/api/v1/users" , userRouter);
 app.use("/api/v1/folder" , folderRouter);
 app.use("/api/v1/file" , fileRouter);
+app.use("/api/v1/trash" , trashRouter);
 
 export default app;
 

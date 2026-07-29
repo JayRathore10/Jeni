@@ -42,6 +42,7 @@ export const getFolders = async (
   try {
     const folders = await Folder.find({
       owner: req.user?.userId,
+      isDeleted: false,
     }).sort({ createdAt: -1 });
 
     res.json({
@@ -67,6 +68,7 @@ export const getFolderById = async (
     const folder = await Folder.findOne({
       _id: folderId,
       owner: req.user?.userId,
+      isDeleted: false,
     });
 
     if (!folder) {
@@ -107,7 +109,7 @@ export const updateFolder = async (
       if (parentFolder !== null) {
         let currentParentId = parentFolder;
         while (currentParentId) {
-          const p = await Folder.findOne({ _id: currentParentId, owner: req.user?.userId });
+          const p = await Folder.findOne({ _id: currentParentId, owner: req.user?.userId, isDeleted: false });
           if (!p) break;
           if (p._id.toString() === folderId) {
             res.status(400).json({ success: false, message: "Cannot move a folder into its own descendant" });
@@ -122,6 +124,7 @@ export const updateFolder = async (
       {
         _id: folderId,
         owner: req.user?.userId,
+        isDeleted: false,
       },
       {
         $set: {
@@ -155,7 +158,32 @@ export const updateFolder = async (
 };
 
 /**
- * DELETE FOLDER + ITS FILES
+ * Recursively soft-delete a folder and all its descendants
+ */
+const recursiveSoftDelete = async (folderId: string, owner: string, deletedAt: Date): Promise<void> => {
+  // Mark all files in this folder as deleted
+  await File.updateMany(
+    { folderId, owner, isDeleted: false },
+    { isDeleted: true, deletedAt }
+  );
+
+  // Find all non-deleted subfolders
+  const subfolders = await Folder.find({ parentFolder: folderId, owner, isDeleted: false });
+
+  // Recursively soft-delete each subfolder
+  for (const subfolder of subfolders) {
+    await recursiveSoftDelete(subfolder._id.toString(), owner, deletedAt);
+  }
+
+  // Mark all subfolders in this level as deleted
+  await Folder.updateMany(
+    { parentFolder: folderId, owner, isDeleted: false },
+    { isDeleted: true, deletedAt }
+  );
+};
+
+/**
+ * DELETE FOLDER (soft delete — moves to trash)
  */
 export const deleteFolder = async (
   req: AuthRequest,
@@ -165,9 +193,10 @@ export const deleteFolder = async (
   try {
     const { folderId } = req.params;
 
-    const folder = await Folder.findOneAndDelete({
+    const folder = await Folder.findOne({
       _id: folderId,
       owner: req.user?.userId,
+      isDeleted: false,
     });
 
     if (!folder) {
@@ -178,15 +207,19 @@ export const deleteFolder = async (
       return;
     }
 
-    // delete all files inside folder
-    await File.deleteMany({
-      folderId,
-      owner: req.user?.userId,
-    });
+    const deletedAt = new Date();
+
+    // Recursively soft-delete all descendants
+    await recursiveSoftDelete(folderId, req.user!.userId, deletedAt);
+
+    // Mark the folder itself as deleted
+    folder.isDeleted = true;
+    folder.deletedAt = deletedAt;
+    await folder.save();
 
     res.json({
       success: true,
-      message: "Folder deleted successfully",
+      message: "Folder moved to trash",
     });
   } catch (err) {
     next(err);
@@ -207,6 +240,7 @@ export const getFolderContents = async (
     const folders = await Folder.find({
       parentFolder: folderId,
       owner: req.user?.userId,
+      isDeleted: false,
     });
 
     const files = await File.find({
@@ -236,6 +270,7 @@ const getUniqueFolderName = async (name: string, parentFolder: string | null, ow
       name: newName,
       parentFolder,
       owner,
+      isDeleted: false,
     });
     
     if (!existingFolder) {
@@ -250,7 +285,7 @@ const getUniqueFolderName = async (name: string, parentFolder: string | null, ow
 };
 
 const recursiveCopyFolder = async (sourceFolderId: string, destParentFolderId: string | null, owner: string, isRoot = false): Promise<any> => {
-  const sourceFolder = await Folder.findOne({ _id: sourceFolderId, owner });
+  const sourceFolder = await Folder.findOne({ _id: sourceFolderId, owner, isDeleted: false });
   if (!sourceFolder) return null;
 
   let newName = sourceFolder.name;
@@ -288,7 +323,7 @@ const recursiveCopyFolder = async (sourceFolderId: string, destParentFolderId: s
   }
 
   // Copy subfolders
-  const subfolders = await Folder.find({ parentFolder: sourceFolderId, owner });
+  const subfolders = await Folder.find({ parentFolder: sourceFolderId, owner, isDeleted: false });
   for (const subfolder of subfolders) {
     await recursiveCopyFolder(subfolder._id.toString(), newFolder._id.toString(), owner);
   }

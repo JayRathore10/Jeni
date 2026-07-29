@@ -9,6 +9,10 @@ export interface IFolder extends Document {
 
   parentFolder: Types.ObjectId | null;
 
+  isDeleted: boolean;
+
+  deletedAt: Date | null;
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -31,6 +35,18 @@ const FolderSchema = new Schema<IFolder>(
       type: Schema.Types.ObjectId,
       ref: "Folder",
       default: null,
+    },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+
+    deletedAt: {
+      type: Date,
+      default: null,
+      index: true,
     },
   },
   {

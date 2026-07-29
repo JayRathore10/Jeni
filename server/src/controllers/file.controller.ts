@@ -143,9 +143,11 @@ export const deleteFile = async (
       {
         _id: fileId,
         owner: req.user?.userId,
+        isDeleted: false,
       },
       {
         isDeleted: true,
+        deletedAt: new Date(),
       },
       {
         new: true,
