@@ -13,7 +13,7 @@ const options: SignOptions = {
 
 const generateToken = (userId: string) => {
   return jwt.sign(
-    { id: userId },
+    { userId: userId },
     secret,
     options
   );
