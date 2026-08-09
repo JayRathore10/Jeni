@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import { FormEvent } from "react";
+import type { FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import "./SharePage.css";
 import { getPublicShareInfo, downloadSharedFile } from "../../api/share.service";
