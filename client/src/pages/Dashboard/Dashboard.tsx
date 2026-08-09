@@ -9,6 +9,7 @@ import ContextMenu from '../../components/ContextMenu/ContextMenu';
 import UploadDropOverlay from '../../components/UploadDropOverlay/UploadDropOverlay';
 import FilePreviewModal from '../../components/FilePreviewModal/FilePreviewModal';
 import FolderPickerModal from '../../components/FolderPickerModal/FolderPickerModal';
+import ShareModal from '../../components/ShareModal/ShareModal';
 import { useFileSystem } from '../../hooks/useFileSystem';
 import type { FileItem, SortDir, SortKey, ViewMode, BreadcrumbItem } from '../../types/types';
 
@@ -30,6 +31,7 @@ const Dashboard: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [previewItem, setPreviewItem] = useState<FileItem | null>(null);
   const [itemToMove, setItemToMove] = useState<FileItem | null>(null);
+  const [shareItem, setShareItem] = useState<FileItem | null>(null);
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([{ id: 'root', label: 'My files' }]);
   const dragCounter = useRef(0);
 
@@ -39,6 +41,7 @@ const Dashboard: React.FC = () => {
     items: files,
     loading,
     error,
+    refresh: refreshFiles,
     handleUpload,
     handleCreateFolder,
     handleRename,
@@ -130,6 +133,8 @@ const Dashboard: React.FC = () => {
         await handleCopy(item, currentFolderId);
       } else if (action === 'download') {
         await handleDownload(item);
+      } else if (action === 'share') {
+        setShareItem(item);
       }
     } catch (err: any) {
       console.error(err.message || 'Action failed');
@@ -291,6 +296,17 @@ const Dashboard: React.FC = () => {
         onMove={onConfirmMove}
         title={itemToMove ? `Move "${itemToMove.name}" to...` : 'Move to...'}
       />
+
+      {shareItem && (
+        <ShareModal
+          isOpen={!!shareItem}
+          onClose={() => {
+            setShareItem(null);
+            refreshFiles();
+          }}
+          item={shareItem}
+        />
+      )}
 
       <UploadDropOverlay visible={isDragging} />
     </div>

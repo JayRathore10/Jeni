@@ -26,6 +26,10 @@ const NotFound = lazy(()=>
   import("./pages/NotFound/NotFound")
 )
 
+const SharePage = lazy(()=>
+  import("./pages/SharePage/SharePage")
+)
+
 const LoadingScreen = lazy(()=>
   import("./components/LoadingScreen/LoadingScreen")
 )
@@ -64,6 +68,12 @@ function App() {
             path="/dashboard" 
             element={
               <Dashboard/>
+            }
+          />
+          <Route
+            path="/share/:token"
+            element={
+              <SharePage />
             }
           />
           <Route 

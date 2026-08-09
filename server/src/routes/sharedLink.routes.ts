@@ -1,21 +1,26 @@
 import { Router } from "express";
+import { authMiddleware } from "../middleware/auth.middleware";
 import {
   createShareLink,
   getShareLink,
   getMyShareLinks,
+  updateShareLink,
   deleteShareLink,
-  incrementDownloadCount,
+  getShareLinkStats,
+  downloadShareFile,
 } from "../controllers/sharedLink.controller";
 
 const router = Router();
 
-// Protected routes (attach your auth middleware if needed)
-router.post("/", createShareLink);
-router.get("/my", getMyShareLinks);
-router.delete("/:id", deleteShareLink);
+// Protected routes
+router.post("/", authMiddleware, createShareLink);
+router.get("/my", authMiddleware, getMyShareLinks);
+router.patch("/:id", authMiddleware, updateShareLink);
+router.delete("/:id", authMiddleware, deleteShareLink);
+router.get("/:id/stats", authMiddleware, getShareLinkStats);
 
 // Public routes
 router.get("/:token", getShareLink);
-router.patch("/:token/download", incrementDownloadCount);
+router.post("/download/:token", downloadShareFile);
 
 export default router;

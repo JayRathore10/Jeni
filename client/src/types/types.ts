@@ -54,7 +54,7 @@ export const mapBackendFileToItem = (backendFile: any): FileItem => {
     owner: backendFile.owner, // This might be an object id, but in UI we just show it.
     modified: backendFile.updatedAt || backendFile.createdAt,
     starred: false, // Backend doesn't support starred yet
-    shared: false, // Backend doesn't support shared prop natively yet
+    shared: !!backendFile.shared,
   };
 };
 
@@ -67,6 +67,6 @@ export const mapBackendFolderToItem = (backendFolder: any): FileItem => {
     owner: backendFolder.owner,
     modified: backendFolder.updatedAt || backendFolder.createdAt,
     starred: false,
-    shared: false,
+    shared: !!backendFolder.shared,
   };
 };

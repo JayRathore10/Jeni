@@ -11,13 +11,15 @@ export interface IShareLink extends Document {
 
   resourceId: Types.ObjectId;
 
-  expiresAt: Date;
+  expiresAt: Date | null;
 
   password: string | null;
 
   downloadCount: number;
 
   maxDownloads: number | null;
+
+  isActive: boolean;
 
   createdAt: Date;
 }
@@ -52,7 +54,7 @@ const ShareLinkSchema = new Schema<IShareLink>(
 
     expiresAt: {
       type: Date,
-      required: true,
+      default: null,
       index: true,
     },
 
@@ -71,6 +73,12 @@ const ShareLinkSchema = new Schema<IShareLink>(
       type: Number,
       default: null,
       min: 1,
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+      index: true,
     },
   },
   {

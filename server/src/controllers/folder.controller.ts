@@ -4,6 +4,7 @@ import path from "path";
 import { Folder } from "../models/folder.model";
 import { File } from "../models/file.model";
 import { AuthRequest } from "../middleware/auth.middleware";
+import { ShareLink } from "../models/shareLink.model";
 
 /**
  * CREATE FOLDER
@@ -241,19 +242,39 @@ export const getFolderContents = async (
       parentFolder: folderId,
       owner: req.user?.userId,
       isDeleted: false,
-    });
+    }).lean();
 
     const files = await File.find({
       folderId,
       owner: req.user?.userId,
       isDeleted: false,
+    }).lean();
+
+    const activeShareLinks = await ShareLink.find({
+      owner: req.user?.userId,
+      isActive: true,
+      $or: [
+        { expiresAt: { $gt: new Date() } },
+        { expiresAt: null }
+      ]
     });
+    const sharedIds = new Set(activeShareLinks.map(link => link.resourceId.toString()));
+
+    const foldersWithShared = folders.map(folder => ({
+      ...folder,
+      shared: sharedIds.has(folder._id.toString())
+    }));
+
+    const filesWithShared = files.map(file => ({
+      ...file,
+      shared: sharedIds.has(file._id.toString())
+    }));
 
     res.json({
       success: true,
       data: {
-        folders,
-        files,
+        folders: foldersWithShared,
+        files: filesWithShared,
       },
     });
   } catch (err) {

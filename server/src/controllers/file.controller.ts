@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { File } from "../models/file.model";
 import { AuthRequest } from "../middleware/auth.middleware";
+import { ShareLink } from "../models/shareLink.model";
 
 export const getFiles = async (
   req: AuthRequest,
@@ -13,11 +14,26 @@ export const getFiles = async (
     const files = await File.find({
       owner: req.user?.userId,
       isDeleted: false,
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: -1 }).lean();
+
+    const activeShareLinks = await ShareLink.find({
+      owner: req.user?.userId,
+      isActive: true,
+      $or: [
+        { expiresAt: { $gt: new Date() } },
+        { expiresAt: null }
+      ]
+    });
+    const sharedIds = new Set(activeShareLinks.map(link => link.resourceId.toString()));
+
+    const filesWithShared = files.map(file => ({
+      ...file,
+      shared: sharedIds.has(file._id.toString())
+    }));
 
     res.status(200).json({
       success: true,
-      data: files,
+      data: filesWithShared,
     });
   } catch (err) {
     next(err);

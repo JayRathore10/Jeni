@@ -6,6 +6,7 @@ import folderRouter from "./routes/folder.routes";
 import fileRouter from "./routes/file.routes";
 import cors from "cors";
 import trashRouter from "./routes/trash.routes";
+import sharedLinkRouter from "./routes/sharedLink.routes";
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use("/api/v1/users" , userRouter);
 app.use("/api/v1/folder" , folderRouter);
 app.use("/api/v1/file" , fileRouter);
 app.use("/api/v1/trash" , trashRouter);
+app.use("/api/v1/share" , sharedLinkRouter);
 
 export default app;
 

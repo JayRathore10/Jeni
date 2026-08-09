@@ -5,6 +5,7 @@ import { File } from "../models/file.model";
 import { Folder } from "../models/folder.model";
 import { User } from "../models/user.model";
 import { AuthRequest } from "../middleware/auth.middleware";
+import { ShareLink } from "../models/shareLink.model";
 
 /**
  * Resolve the path of a folder by walking up the parentFolder chain.
@@ -358,6 +359,7 @@ const recursivePermanentDelete = async (folderId: string, owner: string): Promis
     safeDeletePhysicalFile(file.storagePath);
     totalSizeFreed += file.size;
     await File.deleteOne({ _id: file._id });
+    await ShareLink.deleteMany({ resourceId: file._id });
   }
 
   // Find and recursively delete subfolders
@@ -366,6 +368,8 @@ const recursivePermanentDelete = async (folderId: string, owner: string): Promis
     totalSizeFreed += await recursivePermanentDelete(subfolder._id.toString(), owner);
     await Folder.deleteOne({ _id: subfolder._id });
   }
+
+  await ShareLink.deleteMany({ resourceId: folderId });
 
   return totalSizeFreed;
 };
@@ -403,6 +407,7 @@ export const permanentDeleteItem = async (
       safeDeletePhysicalFile(file.storagePath);
       totalSizeFreed = file.size;
       await File.deleteOne({ _id: file._id });
+      await ShareLink.deleteMany({ resourceId: file._id });
     } else {
       // type === 'folder'
       const folder = await Folder.findOne({ _id: id, owner, isDeleted: true });
@@ -413,6 +418,7 @@ export const permanentDeleteItem = async (
 
       totalSizeFreed = await recursivePermanentDelete(id, owner!);
       await Folder.deleteOne({ _id: folder._id });
+      await ShareLink.deleteMany({ resourceId: folder._id });
     }
 
     // Update storage accounting
@@ -452,6 +458,7 @@ export const emptyTrash = async (
         safeDeletePhysicalFile(file.storagePath);
         totalSizeFreed += file.size;
         await File.deleteOne({ _id: file._id });
+        await ShareLink.deleteMany({ resourceId: file._id });
         deletedCount++;
       } catch (err) {
         console.error(`[Trash] Failed to permanently delete file ${file._id}:`, err);
@@ -464,6 +471,7 @@ export const emptyTrash = async (
     for (const folder of trashedFolders) {
       try {
         await Folder.deleteOne({ _id: folder._id });
+        await ShareLink.deleteMany({ resourceId: folder._id });
         deletedCount++;
       } catch (err) {
         console.error(`[Trash] Failed to permanently delete folder ${folder._id}:`, err);
