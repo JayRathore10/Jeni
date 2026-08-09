@@ -91,3 +91,4 @@ function App() {
 export default App
 
 // understand about the api and add docker  
+// have to remove the manual 3000 api call and made a env config with backendURL 
